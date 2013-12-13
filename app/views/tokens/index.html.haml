@@ -1,0 +1,44 @@
+.page-header
+  %h1
+    Tokens
+
+%p
+  Showing tokens active between #{time_fmt @ti.ta} and #{time_fmt @ti.tb} (#{distance_of_time_in_words @ti.ta, @ti.tb} interval).
+
+- if @all_features
+  %p
+    Showing all features. Click
+    =link_to "here", tokens_path(@ti.query_hash)
+    if you want to see only interesting features.
+- else
+  %p
+    Showing only selected feature[s]. Please click
+    =link_to "here", tokens_path(@ti.query_hash.merge(:all => true))
+    to see all features.
+.btn-group.btn-group-justified
+  = link_to icon_with_text("arrow-left", "Prev"), tokens_path(@ti.prev.query_hash), class: "btn btn-default btn-xs"
+  = link_to icon_with_text("arrow-right", "Next"), tokens_path(@ti.next.query_hash), class: "btn btn-default btn-xs"
+
+= render partial: 'plot'
+
+%p
+  Showing #{@tokens.size} of #{@tokens.count} tokens
+
+%table.table.table-hover
+  %thead
+    %hr
+      %th Feature
+      %th Slot
+      %th Count
+      %th Start
+      %th Duration
+      %th User
+      %th Host
+  %tbody
+    = render partial: 'token', collection: @tokens
+
+-# TODO: :ajax => true does not work but I keep it as a reminder
+= might_paginate(@tokens, :ajax => true)
+
+
+-# range selection: http://www.dangrossman.info/2012/08/20/a-date-range-picker-for-twitter-bootstrap/

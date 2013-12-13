@@ -19,5 +19,18 @@ module Lmstats
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    config.assets.paths << Rails.root.join("vendor", "assets", "fonts")
+    config.assets.paths << Rails.root.join("app", "assets", "movies")
+    config.assets.precompile << /\.(?:svg|eot|woff|ttf|webm|mp4|ogg)$/
+    config.autoload_paths += ["#{Rails}/app/workers"]
+
+    config.generators.stylesheets = false
+    config.generators.javascripts = false
+    config.generators.helper = false
+    # config.generators do |g|
+    #     g.test_framework :mini_test, :spec => true, :fixture => true
+    # end
+
   end
 end

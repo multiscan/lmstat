@@ -1,0 +1,13 @@
+m=jQuery("#editmodal");
+if (m.length > 0) {
+  mm=m.modal("hide");
+  mm.on('hidden.bs.modal', function () {
+    jQuery("#editmodal").remove();
+  })
+}
+fl=jQuery("#feature_<%=@feature.id %>");
+if (fl.length > 0) {
+  c=jQuery('<%= j render(@feature) %>');
+  c.find('input[type=submit]').remove()
+  fl.replaceWith(c);
+}

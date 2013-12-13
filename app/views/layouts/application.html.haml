@@ -1,0 +1,24 @@
+!!!
+%html
+  %head
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+      %title= content_for?(:title) ? ENV['APP_NAME'] + ": " + yield(:title) : "#{ENV['APP_NAME']}: #{controller_name} - #{action_name}"
+      %meta{:content => content_for?(:description) ? yield(:description) : "#{ENV['APP_NAME']}: #{controller_name} - #{action_name}", :name => "description"}
+        = stylesheet_link_tag "application", :media => "all", "data-turbolinks-track" => true
+        = javascript_include_tag "application", "data-turbolinks-track" => true
+        = javascript_include_tag "http://code.highcharts.com/highcharts.js"
+        -# = javascript_include_tag "http://code.highcharts.com/stock/highstock.js"
+        = javascript_include_tag "http://code.highcharts.com/highcharts-more.js"
+
+        = yield(:head)
+        = csrf_meta_tags
+  %body{:class => "#{controller_name} #{action_name}"}
+    #wrap
+      =render 'layouts/nav'
+      #main{:role => "main"}
+        .container
+          .content
+            = render 'layouts/messages'
+            = yield
+      #push
+    =render 'layouts/footer'

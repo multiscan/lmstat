@@ -1,0 +1,19 @@
+.page-header
+  %h1
+    Features
+
+%table.table.table-hover.sortable
+  %thead
+    %hr
+      %th Id
+      %th Show
+      %th Nick
+      %th Color
+      %th Name
+      %th Used
+      %th Total
+      %th %
+      %th Update
+      %th
+  %tbody
+    = render partial: 'feature', collection: @features

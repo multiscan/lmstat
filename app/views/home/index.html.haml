@@ -1,2 +1,111 @@
 %h1 Home#index
 %p Find me in app/views/home/index.html.haml
+
+#plot1{:style => "width: 100%; height: 400px;"}
+#plot2{:style => "width: 100%; height: 400px;"}
+-#plot3{:style => "width: 100%; height: 400px;"}
+
+-#:coffee
+  jQuery('#plot1').highcharts({
+    chart: {type: 'columnrange', inverted: true},
+    title: {text: 'License Usage'},
+    subtitle: {text: 'Ranges'},
+    xAxis: {categories: ['Apple1', 'Apple2','Banana', 'Orange']},
+    yAxis: {title: {text: 'Time'}, type: 'datetime'},
+    legend: {enabled: false},
+    series: [{name: "ActiveRange", data: [
+      [0,Date.UTC(2013,11,18,8,20), Date.UTC(2013,11,18,9,30)],
+      [0,Date.UTC(2013,11,18,10,20), Date.UTC(2013,11,18,11,10)],
+      [0,Date.UTC(2013,11,19,10,20), Date.UTC(2013,11,20,8,10)],
+      [1,Date.UTC(2013,11,19,8,10), Date.UTC(2013,11,20,8,10)],
+      [1,Date.UTC(2013,11,18,8,40), Date.UTC(2013,11,18,11,50)],
+      [2,Date.UTC(2013,11,18,9,40), Date.UTC(2013,11,18,11,20)],
+      [3,Date.UTC(2013,11,18,7,50), Date.UTC(2013,11,18,10,30)]]
+    }]
+  })
+
+:coffee
+  jQuery('#plot1').highcharts({
+    chart: {type: 'columnrange', inverted: true},
+    title: {text: 'License Usage'},
+    subtitle: {text: 'Ranges'},
+    xAxis: {categories: ['Apple1', 'Apple2','Banana', 'Orange1', 'Orange2']},
+    yAxis: {title: {text: 'Time'}, min: 4},
+    legend: {enabled: false},
+    scrollbar: {enabled: true}
+    series: [{name: "ActiveRange", data: [
+      [0,1, 2],
+      [0,5, 8],
+      [0,10,15],
+      [1,0,4],
+      [1,7,9],
+      [2,6,12],
+      [3,0,5],
+      [3,10,13],
+      [4,2,4]
+    ]}]
+  })
+
+-#:coffee
+  jQuery('#plot2').highcharts({
+    chart: {type: 'area'},
+    title: {text: 'License Usage'},
+    xAxis: {
+      title: {text: 'Time'},
+      type: 'datetime',
+      categories: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+    },
+    legend: {enabled: false},
+    plotOptions: {
+      area: {
+        stacking: 'normal',
+        lineColor: '#666666',
+        lineWidth: 1,
+        marker: {
+          enabled: false,
+          lineWidth: 1,
+          lineColor: '#666666'
+        }
+      }
+    },
+    series: [
+      {name: "Apple  free", step: true, color: '#FFCCCC', data: [1,0,1,1,2,1,1,0,1,2,1,1,1,1,1,2]},
+      {name: "Apple  used", step: true, color: '#CC0000', data: [1,2,1,1,0,1,1,2,1,0,1,1,1,1,1,0]},
+      {name: "Banana free", step: true, color: '#CCFFCC', data: [1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1]},
+      {name: "Banana used", step: true, color: '#00CC00', data: [0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0]},
+      {name: "Orange free", step: true, color: '#CCCCFF', data: [1,1,0,0,1,2,2,2,2,2,1,1,1,2,2,2]}
+      {name: "Orange used", step: true, color: '#0000CC', data: [1,1,2,2,1,0,0,0,0,0,1,1,1,0,0,0]},
+    ]
+  })
+
+-#:coffee
+  jQuery('#plot3').highcharts('StockChart', {
+    rangeSelector: {slected: 1},
+    chart: {type: ''},
+    title: {text: 'License Usage'},
+    subtitle: {text: 'Ranges'},
+    legend: {enabled: false},
+    series: [
+      {name: "Apple", step: true, data: [
+        [Date.UTC(2013,11,18,7,0), 0],
+        [Date.UTC(2013,11,19,8,10), 1],
+        [Date.UTC(2013,11,18,8,20), 2],
+        [Date.UTC(2013,11,18,9,30), 1],
+        [Date.UTC(2013,11,18,10,20), 2],
+        [Date.UTC(2013,11,20,8,10), 0],
+        [Date.UTC(2013,11,18,8,40), 1],
+        [Date.UTC(2013,11,19,10,20), 2],
+        [Date.UTC(2013,11,18,11,50), 0]
+      ]},
+      {name: "Banana", step: true, data: [
+        [Date.UTC(2013,11,18,7,0), 0],
+        [Date.UTC(2013,11,18,9,40), 1],
+        [Date.UTC(2013,11,18,11,20), 0]
+      ]},
+      {name: "Orange", step: true, data: [
+        [Date.UTC(2013,11,18,7,0), 0],
+        [Date.UTC(2013,11,18,7,50), 1],
+        [Date.UTC(2013,11,18,11,20), 0]
+      ]}
+    ]
+  })

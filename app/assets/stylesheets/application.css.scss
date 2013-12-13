@@ -1,0 +1,25 @@
+/*
+*= require bootstrap-colorpicker
+*/
+
+@import "bootstrap";
+// @import "bootstrap-custom";
+//@import "bootstrap/theme";
+
+#main {
+  padding-bottom: 3em;
+}
+#foot {
+  padding-top: 1em;
+  width: 100%;
+  height: 3em;
+  background-color: #fff;
+  z-index: 1;
+  position: fixed;
+  bottom: 0px;
+}
+
+.colorbox {
+  width: 2.1em;
+  height: 1.5em;
+}

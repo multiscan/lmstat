@@ -1,0 +1,17 @@
+#editmodal.modal.fade
+  .modal-dialog
+    .modal-content
+      =simple_form_for(@feature, remote: true) do |f|
+        .modal-header
+          %button{:type=>"button", :class=>"close", :data => {:dismiss=>"modal"}} &times;
+          %h4 Edit Feature
+        .modal-body
+          .form-inputs
+            =f.input :nick
+            =f.input :custom_color, label: "Color", input_html: {class: "colorpicker"}
+            =f.input :visible, label: "Visible"
+        .modal-footer
+          .form-actions
+            %button{:type=>"button", :class=>"btn btn-default", :data => {:dismiss=>"modal"}}Close
+            = f.button :submit, :class => "btn btn-primary"
+

@@ -1,0 +1,6 @@
+%tr{:id => "token_#{token.id}"}
+  %td=token.count
+  %td=time_fmt(token.start_at)
+  %td=token_duration(token)
+  %td=token.user.uid
+  %td=token.workstation.hostname

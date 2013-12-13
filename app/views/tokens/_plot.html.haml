@@ -1,0 +1,17 @@
+- unless @plot_data.empty?
+  #plot1{:style => "width: 100%; height: 800px;"}
+  :javascript
+    jQuery('#plot1').highcharts({
+      chart: {type: 'columnrange', inverted: true, zoomType: 'y'},
+      title: {text: 'License Usage'},
+      subtitle: {text: 'Ranges'},
+      //xAxis: {categories: #{@plot_categories.to_json} },
+      yAxis: {title: {text: 'Time'}, type: 'datetime', min: #{@plot_ta}, max: #{@plot_tb}},
+      legend: {enabled: false},
+      // plotOptions: {series: {stacking: 'normal'}},
+      tooltip: {
+          valueSuffix: '',
+          formatter: function() {return '<p>'+this.series.name+'</b><br/>'+Highcharts.dateFormat('%Y-%m-%d %H:%M', this.point.low) +' - ' + Highcharts.dateFormat('%Y-%m-%d %H:%M', this.point.high);}
+      },
+      series: #{@plot_data.to_json}
+    });

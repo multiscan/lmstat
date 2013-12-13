@@ -1,0 +1,8 @@
+%tr{:id => "token_#{token.id}"}
+  %td=link_to token.feature.shortname, token.feature
+  %td=token.slot
+  %td=token.count
+  %td=time_fmt(token.start_at)
+  %td=token_duration(token)
+  %td=link_to token.user.uid, token.user
+  %td=token.workstation.hostname

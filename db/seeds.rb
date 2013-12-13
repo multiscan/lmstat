@@ -1,9 +1,14 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-# Environment variables (ENV['...']) can be set in the file config/application.yml.
-# See http://railsapps.github.io/rails-environment-variables.html
+require 'pathname'
+
+log_dir = ENV["LMSTAT_LOG_DIR"] ? Pathname.new(ENV["LMSTAT_LOG_DIR"]) : Rails.root.join("db", "seed_data", "logs")
+puts "Importing log files from #{log_dir}"
+done_dir=log_dir.join("done")
+Dir.glob(log_dir.join("*.log")) do |log_file|
+  s=LmStatus.new(logpath: log_file)
+  if s.save
+    FileUtils.mv(log_file, done_dir)
+  else
+    raise "Failed to load log file #{log_file}"
+  end
+end
+

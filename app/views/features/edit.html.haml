@@ -1,0 +1,15 @@
+.page-header
+  %h1
+    Edit Feature
+    %small=@feature.shortname
+
+=simple_form_for(@feature) do |f|
+  .form-inputs
+    =f.input :nick
+    =f.input :custom_color, label: "Color", input_html: {class: "colorpicker"}
+    =f.input :visible, label: "Show in listing and plots"
+  .form-actions
+    = f.button :submit
+
+:javascript
+  jQuery('.colorpicker').colorpicker();

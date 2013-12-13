@@ -1,0 +1,94 @@
+.page-header
+  %h1
+    =[@feature.nick, @feature.name].compact.join(" - ")
+    %br
+    %small feature details
+
+.row
+  .col-sm-10
+    %dl.dl-horizontal
+      %dt Last Seen at:
+      %dd=time_fmt(@feature.last_seen_at)
+      %dt Used (last)
+      %dd=@feature.used
+      %dt Max used
+      %dd=@used_max
+      %dt Total (last)
+      %dd=@feature.total
+      %dt Average usage [%]
+      %dd=(100*@usage_ave).round(1)
+      %dt Token avg duration [s]
+      %dd=@token_average_duration
+  .col-sm-2
+    .btn-group.btn-group-justified
+      - if prv=@feature.prev
+        = link_to icon_with_text("arrow-left", "Prev"), prv, class: "btn btn-default btn-xs"
+      - if nxt=@feature.next
+        = link_to icon_with_text("arrow-right", "Next"), nxt, class: "btn btn-default btn-xs"
+
+%h2 Usage
+#plot1
+
+.row
+  .col-lg-6
+    %h2 Recent Usage History
+    %table.table.table-hover
+      %thead
+        %hr
+          %th At
+          %th %
+          %th Used
+          %th Total
+      %tbody
+        = render partial: 'usage', collection: @usages
+
+  .col-lg-6
+    %h2 Recently used Tokens
+    %table.table.table-hover.sortable
+      %thead
+        %hr
+          %th Count
+          %th Start
+          %th Duration
+          %th User
+          %th Host
+      %tbody
+        = render partial: 'token', collection: @tokens
+
+:coffee
+  jQuery('#plot1').highcharts({
+    rangeSelector: {slected: 1},
+    chart: {
+      type: 'area',
+      zoomType: 'x'
+    },
+    plotOptions: {
+      area: {
+        fillColor: Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.5).get('rgba'),
+        lineWidth: 1,
+        marker: {enabled: false},
+        shadow: false,
+        states: {
+          hover: {
+            lineWidth: 1
+          }
+        },
+        threshold: null
+      }
+    }
+    xAxis: {ordinal: false, type: 'datetime'},
+    yAxis: {
+      min: 0,
+      max: 100,
+      title: {text : 'Usage'},
+      plotLines: [
+        {value: #{100*@usage_ave}, color: 'green', dashStyle: 'shortdash', width: 2, label: {text: 'Average'}}
+      ]
+    },
+    # title: {text: 'License Usage'},
+    # subtitle: {text: 'Total/Used'},
+    legend: {enabled: false},
+    series: [
+      {name: "Usage", step: true, data: #{@plot_data.to_json}}
+    ]
+  })

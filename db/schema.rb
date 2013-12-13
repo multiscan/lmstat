@@ -11,6 +11,68 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20131204135748) do
+
+  create_table "features", force: true do |t|
+    t.string   "name"
+    t.string   "nick"
+    t.integer  "used",         default: 0
+    t.integer  "total",        default: 0
+    t.string   "custom_color"
+    t.datetime "since"
+    t.datetime "last_seen_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "show"
+    t.boolean  "visible",      default: true
+  end
+
+  create_table "settings", force: true do |t|
+    t.string   "key"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tokens", force: true do |t|
+    t.integer  "feature_id"
+    t.integer  "user_id"
+    t.integer  "workstation_id"
+    t.integer  "pid"
+    t.integer  "count"
+    t.string   "signature"
+    t.integer  "slot"
+    t.integer  "duration"
+    t.datetime "start_at"
+    t.datetime "stop_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "usages", force: true do |t|
+    t.integer  "feature_id"
+    t.integer  "total",      default: 0
+    t.integer  "used",       default: 0
+    t.integer  "duration"
+    t.float    "usage"
+    t.float    "wu"
+    t.datetime "start_at"
+    t.datetime "stop_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "uid"
+    t.string   "fullname"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "workstations", force: true do |t|
+    t.string   "hostname"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

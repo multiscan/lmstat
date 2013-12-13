@@ -13,4 +13,17 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+//= require jquery.tablesorter
+//= require bootstrap
+//= require bootstrap-colorpicker
+//= require init_bootstrap
+//= require features
+
+function on_ready() {
+  // console.debug("application.js on_ready");
+  jQuery("table.sortable").tablesorter();
+}
+
+$(document).ready(on_ready);
+$(document).on('page:load', on_ready);
+

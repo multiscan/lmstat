@@ -1,0 +1,11 @@
+// remove pre-existing modal dialog if any
+m=jQuery("#editmodal");
+if (m.length > 0) {m.remove();}
+
+jQuery('body').append('<%= j render("edit_dialog")%>');
+mm=jQuery("#editmodal").modal();
+mm.on('shown.bs.modal', function () {
+  cp=jQuery('.colorpicker');
+  cp.colorpicker();
+})
+
