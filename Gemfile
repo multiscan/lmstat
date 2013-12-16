@@ -24,6 +24,10 @@ gem 'will_paginate', '~> 3.0.3'
 # gem 'whenever', :require => false
 gem 'rest-client'
 
+gem 'capistrano', '~> 3.0.1'
+gem 'capistrano-rvm', '~> 0.1.0'
+gem 'capistrano-rails', '~> 1.1.0'
+gem 'capistrano-bundler'
 # --------------------------------------------------------------------------- js
 gem 'jbuilder', '~> 1.2'
 gem 'jquery-rails'
