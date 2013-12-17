@@ -13,7 +13,7 @@ class LmStatusController < ApplicationController
         if ak.nil? || ak != ENV['API_KEY']
           render :json => "ERR", :status => :unauthorized
         else
-          s=LmStatus.new params.permit([:time, :features, :logfile])
+          s=LmStatus.new params.permit([:time, :features, :file])
           if s.save
             render :json => "OK!"
           else

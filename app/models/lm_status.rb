@@ -8,7 +8,7 @@ class LmStatus
     # set mandatory timestamp either from explicit parameter or from filename
     ts = params[:time]
     if ts.nil? &&
-      f = if p=params[:logfile]
+      f = if p=params[:file]
             p.original_filename
           elsif p=params[:logpath]
             File.basename(p)
@@ -26,7 +26,7 @@ class LmStatus
     if f=params[:features]
       @features = feat
     else
-      if f=params[:logfile]
+      if f=params[:file]
         p=LmstatParser.new(f.tempfile)
         @features = p.features
       elsif f=params[:logpath]
