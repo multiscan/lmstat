@@ -12,5 +12,5 @@ Lmstats::Application.routes.draw do
 
   resources :lm_status, only: [:create]
 
-  root :to => "home#index"
+  root :to => "features#index"
 end
