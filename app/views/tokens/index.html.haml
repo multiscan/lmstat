@@ -2,22 +2,23 @@
   %h1
     Tokens
 
-%p
-  Showing tokens active between #{time_fmt @ti.ta} and #{time_fmt @ti.tb} (#{distance_of_time_in_words @ti.ta, @ti.tb} interval).
+  %p= period(@ti)
+  -#  Showing tokens active between #{time_fmt @ti.ta} and #{time_fmt @ti.tb} (#{distance_of_time_in_words @ti.ta, @ti.tb} interval).
 
-- if @all_features
-  %p
-    Showing all features. Click
-    =link_to "here", tokens_path(@ti.query_hash)
-    if you want to see only interesting features.
-- else
-  %p
-    Showing only selected feature[s]. Please click
-    =link_to "here", tokens_path(@ti.query_hash.merge(:all => true))
-    to see all features.
-.btn-group.btn-group-justified
-  = link_to icon_with_text("arrow-left", "Prev"), tokens_path(@ti.prev.query_hash), class: "btn btn-default btn-xs"
-  = link_to icon_with_text("arrow-right", "Next"), tokens_path(@ti.next.query_hash), class: "btn btn-default btn-xs"
+  - if @all_features
+    %p
+      Showing all features. Click
+      =link_to "here", tokens_path(@ti.query_hash)
+      if you want to see only interesting features.
+  - else
+    %p
+      Showing only selected feature[s]. Please click
+      =link_to "here", tokens_path(@ti.query_hash.merge(:all => true))
+      to see all features.
+  -#.btn-group.btn-group-justified
+  .btn-group
+    = link_to icon_with_text("arrow-left", "Prev. period"), tokens_path(@ti.prev.query_hash), class: "btn btn-default btn-xs"
+    = link_to text_with_icon("arrow-right", "Next period"), tokens_path(@ti.next.query_hash), class: "btn btn-default btn-xs"
 
 = render partial: 'plot'
 

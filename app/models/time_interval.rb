@@ -3,7 +3,7 @@ class TimeInterval
 
   # This is called with TimeInterval.new(params.permit([:t, :ta, :tb, :dt]))
   def initialize(p={})
-    Rails.logger.debug("Initializing TimeInterval with #{p.inspect}")
+    # Rails.logger.debug("Initializing TimeInterval with #{p.inspect}")
     d = a = c = b = nil
     d = p[:dt].to_i.seconds if p[:dt].present?
     c = to_time(p[:t])  if p[:t].present?
@@ -41,7 +41,7 @@ class TimeInterval
     @tb = b
     @t  = c
     @dt = d
-    Rails.logger.debug("Initialized TimeInterval: ta=#{ta} - t=#{t} - tb=#{tb} / dt=#{dt} - given?=#{@given}")
+    # Rails.logger.debug("Initialized TimeInterval: ta=#{ta} - t=#{t} - tb=#{tb} / dt=#{dt} - given?=#{@given}")
   end
 
 

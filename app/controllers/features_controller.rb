@@ -6,22 +6,37 @@ class FeaturesController < ApplicationController
   end
 
   def show
-    @usages = @feature.usages.order('updated_at DESC').limit(50)
-    @tokens = @feature.tokens.order('start_at DESC').limit(50)
-    if @tokens.count > 0
+    ti_params = {dt: 604800, tb: Time.zone.now}.merge params.permit([:t, :ta, :tb, :dt])
+    puts "ti_params: #{ti_params.inspect}"
+    @ti = TimeInterval.new(ti_params)
+    @period_usages = @feature.usages.open_between(@ti.ta, @ti.tb)
+    @period_tokens = @feature.tokens.open_between(@ti.ta, @ti.tb)
+    @usages = @period_usages.order('start_at DESC').limit(50)
+    @tokens = @period_tokens.order('start_at DESC').limit(50)
+
+    @token_average_duration = 0
+    @token_average_duration_period = 0
+
+    if @feature.tokens.count > 0
       @token_average_duration = @feature.tokens.closed.sum(:duration) / @feature.tokens.closed.count
-    else
-      @token_average_duration = 0
     end
-    if @usages.count > 0
+    if @period_tokens.count > 0
+      @token_average_duration_period = @period_tokens.closed.sum(:duration) / @period_tokens.closed.count
+    end
+
+    @usage_ave = @feature.usage
+    @used_max = @feature.used
+    @usage_ave_period = 0
+    @used_max_period = 0
+
+    if @feature.usages.count > 0
       @usage_ave = @feature.usages.sum(:wu).to_f / @feature.usages.sum(:duration)
       @used_max =  @feature.usages.maximum(:used)
-      # @total_min = @feature.usages.minimum(:total)
-      # @total_max = @feature.usages.maximum(:total)
-      @plot_data = @feature.usages.map{|u| [u.from_ms, u.percent]}
-    else
-      @usage_ave = @feature.usage
-      @used_max  = @feature.used
+    end
+    if @period_usages.count > 0
+      @usage_ave_period = @period_usages.sum(:wu).to_f / @period_usages.sum(:duration)
+      @used_max_period =  @period_usages.maximum(:used)
+      @plot_data = @period_usages.map{|u| [u.from_ms, u.percent]}
     end
   end
 

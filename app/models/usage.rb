@@ -7,6 +7,9 @@ class Usage < ActiveRecord::Base
 
   before_save :precompute_values
 
+  scope :open_at, ->(t) { where(['start_at <= ? AND (stop_at > ? OR stop_at IS NULL)', t, t]) }
+  scope :open_between, ->(ta, tb) { where(['(start_at >= ? AND start_at < ?) OR (start_at < ? AND ( stop_at > ? OR stop_at IS NULL) )', ta, tb, ta, ta]) }
+
   def self.percent_for_interval(ta, tb)
     uu=Usage.where(start_at: ta..tb).where(stop_at: ta..tb).sum(wu)
 

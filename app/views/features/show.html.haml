@@ -4,32 +4,66 @@
     %br
     %small feature details
 
+  %p= period(@ti)
+  .row
+    .col-sm-4
+      .btn-group.btn-group-justified
+        = link_to icon_with_text("arrow-left", "Prev. period"), feature_path(@feature, @ti.prev.query_hash), class: "btn btn-default btn-xs"
+        = link_to text_with_icon("arrow-right", "Next period"), feature_path(@feature, @ti.next.query_hash), class: "btn btn-default btn-xs"
+
+    .col-sm-4.col-sm-offset-4
+      .btn-group.btn-group-justified
+        - if prv=@feature.prev
+          = link_to icon_with_text("arrow-left", "Prev feature"), prv, class: "btn btn-default btn-xs"
+        - if nxt=@feature.next
+          = link_to text_with_icon("arrow-right", "Next feature"), nxt, class: "btn btn-default btn-xs"
+
 .row
-  .col-sm-10
+  .col-sm-4
+    %h4 Now
     %dl.dl-horizontal
-      %dt Last Seen at:
+      %dt Seen at:
       %dd=time_fmt(@feature.last_seen_at)
-      %dt Used (last)
+      %dt Used
       %dd=@feature.used
+      %dt Total
+      %dd=@feature.total
+  .col-sm-4
+    %h4 All-times
+    %dl.dl-horizontal
       %dt Max used
       %dd=@used_max
-      %dt Total (last)
-      %dd=@feature.total
       %dt Average usage [%]
       %dd=(100*@usage_ave).round(1)
       %dt Token avg duration [s]
       %dd=@token_average_duration
-  .col-sm-2
-    .btn-group.btn-group-justified
-      - if prv=@feature.prev
-        = link_to icon_with_text("arrow-left", "Prev"), prv, class: "btn btn-default btn-xs"
-      - if nxt=@feature.next
-        = link_to icon_with_text("arrow-right", "Next"), nxt, class: "btn btn-default btn-xs"
+  .col-sm-4
+    %h4 Period
+    %dl.dl-horizontal
+      %dt Max used
+      %dd=@used_max_period
+      %dt Average usage [%]
+      %dd=(100*@usage_ave_period).round(1)
+      %dt Token avg duration [s]
+      %dd=@token_average_duration_period
 
-%h2 Usage
+
+%h2 Usage Percentage
 #plot1
 
-.row
+%h2 Tokens
+%table.table.table-hover.sortable
+  %thead
+    %hr
+      %th Count
+      %th Start
+      %th Duration
+      %th User
+      %th Host
+  %tbody#tokens
+    = render partial: 'token', collection: @tokens
+
+-#.row
   .col-lg-6
     %h2 Recent Usage History
     %table.table.table-hover
@@ -82,10 +116,11 @@
       max: 100,
       title: {text : 'Usage'},
       plotLines: [
-        {value: #{100*@usage_ave}, color: 'green', dashStyle: 'shortdash', width: 2, label: {text: 'Average'}}
+        {value: #{100*@usage_ave}, color: 'green', dashStyle: 'shortdash', width: 2, label: {text: 'Average (all time)'}},
+        {value: #{100*@usage_ave_period}, color: 'orange', dashStyle: 'shortdash', width: 2, label: {text: 'Average (period)'}}
       ]
     },
-    # title: {text: 'License Usage'},
+    title: {text: 'License Usage'},
     # subtitle: {text: 'Total/Used'},
     legend: {enabled: false},
     series: [
